@@ -1,3 +1,6 @@
 from django.contrib import admin
+from mptt.admin import MPTTModelAdmin
 
-# Register your models here.
+from projects.models import Category
+
+admin.site.register(Category, MPTTModelAdmin)
