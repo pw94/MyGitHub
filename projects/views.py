@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+from projects.models import Category
+
+
+def show_categories(request):
+    return render(request, "categories.html", {'categories': Category.objects.all()})
