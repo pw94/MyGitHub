@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from projects.views import show_categories
+from projects.views import show_categories, add_category
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('categories/', show_categories),
+    path('categories/add/', add_category),
 ]
