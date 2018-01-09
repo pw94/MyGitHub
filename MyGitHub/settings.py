@@ -35,11 +35,16 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'projects',
     'mptt',
     'taggit',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +74,11 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 WSGI_APPLICATION = 'MyGitHub.wsgi.application'
 
@@ -123,3 +133,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 TAGGIT_CASE_INSENSITIVE = True
+
+SITE_ID = 1
