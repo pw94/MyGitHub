@@ -11,7 +11,7 @@
 <ul>
     {% recursetree categories %}
         <li class="list-group">
-            {{ node.name }} <a class="add-category-button">+</a>
+            {{ node.name }} <a class="add-category-button">+</a> <a href={% url 'delete_category' node.id %} class="remove-category-button">-</a>
             <div class="add-category-form">
                 <form action="/categories/add/" class="form-inline" method="post">
                     {% csrf_token %}

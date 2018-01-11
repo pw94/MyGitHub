@@ -14,3 +14,12 @@ def add_category(request):
         name = request.POST['category_name']
         Category.objects.create(name=name, parent=parent)
     return redirect(show_categories)
+
+
+def delete_category(request, category_id):
+    node = Category.objects.get(id=category_id)
+    if request.method == 'POST':
+        node.delete()
+        return redirect(show_categories)
+    else:
+        return render(request, "delete_category.html", {'node': node})
