@@ -16,12 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 
-from projects.views import show_categories, add_category, delete_category
+from projects.views import show_categories, add_category, delete_category, add_project
 
 urlpatterns = [
     re_path(r'^accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
     path('categories/', show_categories),
     path('categories/add/', add_category, name='add_category'),
-    re_path('categories/delete/(?P<category_id>\d+)/', delete_category, name='delete_category'),
+    path('categories/delete/<int:category_id>/', delete_category, name='delete_category'),
+    path('projects/add/<int:category_id>/', add_project, name='add_project'),
+    path('projects/add/', add_project, name='add_project'),
 ]
