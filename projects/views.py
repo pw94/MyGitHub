@@ -10,7 +10,7 @@ def show_categories(request):
 def add_category(request):
     if request.method == 'POST':
         parent_id = request.POST['parent_id']
-        parent = Category.objects.get(id=parent_id)
+        parent = Category.objects.get(id=parent_id) if parent_id else None
         name = request.POST['category_name']
         Category.objects.create(name=name, parent=parent)
     return redirect(show_categories)

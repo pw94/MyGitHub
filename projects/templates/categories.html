@@ -13,7 +13,7 @@
         <li class="list-group">
             {{ node.name }} <a class="add-category-button">+</a> <a href={% url 'delete_category' node.id %} class="remove-category-button">-</a>
             <div class="add-category-form">
-                <form action="/categories/add/" class="form-inline" method="post">
+                <form action={% url 'add_category' %} class="form-inline" method="post">
                     {% csrf_token %}
                     <input name="category_name" class="form-control" type="text" value="">
                     <input name="parent_id" type="hidden" value="{{ node.id }}">
@@ -27,6 +27,17 @@
             {% endif %}
         </li>
     {% endrecursetree %}
+    <li class="list-group">
+        <a class="add-category-button">+</a>
+        <div class="add-category-form">
+            <form action={% url 'add_category' %} class="form-inline" method="post">
+                {% csrf_token %}
+                <input name="category_name" class="form-control" type="text" value="">
+                <input name="parent_id" type="hidden" value="">
+                <input class="btn btn-primary" type="submit" value="+">
+            </form>
+        </div>
+    </li>
 </ul>
 <script>
     $(function() {

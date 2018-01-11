@@ -22,6 +22,6 @@ urlpatterns = [
     re_path(r'^accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
     path('categories/', show_categories),
-    path('categories/add/', add_category),
+    path('categories/add/', add_category, name='add_category'),
     re_path('categories/delete/(?P<category_id>\d+)/', delete_category, name='delete_category'),
 ]
