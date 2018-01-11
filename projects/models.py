@@ -10,6 +10,9 @@ class Category(MPTTModel):
     class MPTTMeta:
         order_insertion_by = ['name']
 
+    class Meta:
+        verbose_name_plural = 'Categories'
+
 
 class Project(models.Model):
     name = models.CharField(max_length=50, unique=True)
