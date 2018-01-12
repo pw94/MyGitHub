@@ -2,11 +2,12 @@
 
 {% block content %}
 <ul>
+    {% load mptt_tags %}
     {% recursetree categories %}
-        <li class="list-group">
+        <li>
             <a href={% url 'add_project' node.id %} title="Add project to this category">{{ node.name }}</a>
-            <a class="add-category-button">+</a>
-            <a href={% url 'delete_category' node.id %} class="remove-category-button">-</a>
+            <a class="add-category-button" title="Add child category">+</a>
+            <a href={% url 'delete_category' node.id %} class="remove-category-button" title="Remove category">-</a>
             <div class="add-category-form">
                 <form action={% url 'add_category' %} class="form-inline" method="post">
                     {% csrf_token %}
@@ -23,7 +24,7 @@
         </li>
     {% endrecursetree %}
     <li class="list-group">
-        <a class="add-category-button">+</a>
+        <a class="add-category-button" title="Add category">+</a>
         <div class="add-category-form">
             <form action={% url 'add_category' %} class="form-inline" method="post">
                 {% csrf_token %}
