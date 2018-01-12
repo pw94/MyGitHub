@@ -5,7 +5,7 @@ from projects.models import Category
 
 
 def show_categories(request):
-    return render(request, "categories.html", {'categories': Category.objects.all()})
+    return render(request, "categories.html", {'categories': Category.objects.all(), 'title': 'Categories'})
 
 
 def add_category(request):
@@ -23,7 +23,7 @@ def delete_category(request, category_id):
         node.delete()
         return redirect(show_categories)
     else:
-        return render(request, "delete_category.html", {'node': node})
+        return render(request, "delete_category.html", {'node': node, 'title': 'Delete category'})
 
 
 def add_project(request, category_id=None):
@@ -34,4 +34,4 @@ def add_project(request, category_id=None):
             return redirect(show_categories)
     category = Category.objects.get(id=category_id) if category_id else Category.objects.all()[:1].get()
     form = ProjectForm(initial={'category': category})
-    return render(request, 'add_project.html', {'form': form})
+    return render(request, 'add_project.html', {'form': form, 'title': 'Add project'})
