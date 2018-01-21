@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <form action={% url 'delete_project' node.id %} method="post">
+        {% csrf_token %}
+        <h2>Are you sure you want to delete project {{ node.name }}?</h2>
+        <input name="id" type="hidden" value="{{ node.id }}">
+        <input class="btn btn-danger" type="submit" value="Delete">
+    </form>
+{% endblock %}

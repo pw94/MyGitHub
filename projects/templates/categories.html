@@ -17,6 +17,10 @@
                     <input class="btn btn-primary" type="submit" value="+">
                 </form>
             </div>
+            {% for project in node.projects.all %}
+                <br /><a href={{ project.url }}>{{ project.name }}</a>
+                <a href={% url 'delete_project' project.id %} title="Remove project">-</a>
+            {% endfor %}
             {% if not node.is_leaf_node %}
                 <ul class="children list-group-item">
                     {{ children }}

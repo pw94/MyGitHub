@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 
-from projects.views import show_categories, add_category, delete_category, add_project, get_projects
+from projects.views import show_categories, add_category, delete_category, add_project, get_projects, delete_project
 
 urlpatterns = [
     re_path(r'^accounts/', include('allauth.urls')),
@@ -27,4 +27,6 @@ urlpatterns = [
     path('projects/', get_projects, name='projects'),
     path('projects/add/<int:category_id>/', add_project, name='add_project'),
     path('projects/add/', add_project, name='add_project'),
+    path('projects/delete/<int:project_id>/', delete_project, name='delete_project'),
+
 ]

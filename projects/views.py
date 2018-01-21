@@ -47,3 +47,12 @@ def get_projects(request):
         pros = [Project_DAO(p.name, p.url) for p in projects]
         return render(request, 'projects.html', {'projects': pros, 'title': 'Projects', 'empty': 'No projects found.'})
     return render(request, 'projects.html', {'projects': [], 'title': 'Projects', 'empty': 'Search for the project'})
+
+
+def delete_project(request, project_id):
+    node = Project.objects.get(id=project_id)
+    if request.method == 'POST':
+        node.delete()
+        return redirect(show_categories)
+    else:
+        return render(request, "delete_project.html", {'node': node, 'title': 'Delete project'})
