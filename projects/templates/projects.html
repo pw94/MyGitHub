@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    {% include 'include/search_form.html' %}
+    <h1>Projects</h1>
+    {% for p in projects %}
+        <h2>{{ p.name }}</h2>
+        <h3>{{ p.url }}</h3>
+    {% empty %}
+        <h4>{{ empty }}</h4>
+    {% endfor %}
+{% endblock %}

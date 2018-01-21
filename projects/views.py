@@ -1,7 +1,9 @@
+from collections import namedtuple
+
 from django.shortcuts import render, redirect
 
 from projects.forms import ProjectForm
-from projects.models import Category
+from projects.models import Category, Project
 
 
 def show_categories(request):
@@ -35,3 +37,13 @@ def add_project(request, category_id=None):
     category = Category.objects.get(id=category_id) if category_id else Category.objects.all()[:1].get()
     form = ProjectForm(initial={'category': category})
     return render(request, 'add_project.html', {'form': form, 'title': 'Add project'})
+
+
+def get_projects(request):
+    if request.method == 'POST':
+        project_name = request.POST['project_name']
+        projects = Project.search(project_name)
+        Project_DAO = namedtuple('Project_DAO', ['name', 'url'], verbose=True)
+        pros = [Project_DAO(p.name, p.url) for p in projects]
+        return render(request, 'projects.html', {'projects': pros, 'title': 'Projects', 'empty': 'No projects found.'})
+    return render(request, 'projects.html', {'projects': [], 'title': 'Projects', 'empty': 'Search for the project'})

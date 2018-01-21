@@ -22,3 +22,24 @@ class Project(models.Model):
     url = models.URLField()
     tags = TaggableManager()
     category = models.ForeignKey('Category', on_delete=models.DO_NOTHING, related_name='projects', related_query_name='project')
+
+    @classmethod
+    def search(cls, project_name):
+        projects = []
+        try:
+            project = cls.objects.get(name=project_name)
+            projects.append(project)
+        except cls.DoesNotExist:
+            pass
+        words = project_name.split()
+        projects.extend(cls.objects.filter(tags__name__in=words).distinct())
+        for name in words:
+            if len(name) >= 3:
+                try:
+                    project = cls.objects.get(name=name)
+                    projects.append(project)
+                except cls.DoesNotExist:
+                    pass
+        seen = set()
+        seen_add = seen.add
+        return [x for x in projects if not (x in seen or seen_add(x))]
