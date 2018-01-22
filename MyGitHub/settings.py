@@ -41,10 +41,6 @@ INSTALLED_APPS = [
     'projects',
     'mptt',
     'taggit',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.github',
 ]
 
 MIDDLEWARE = [
@@ -77,7 +73,6 @@ TEMPLATES = [
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 WSGI_APPLICATION = 'MyGitHub.wsgi.application'
@@ -135,3 +130,7 @@ STATIC_URL = '/static/'
 TAGGIT_CASE_INSENSITIVE = True
 
 SITE_ID = 1
+
+AUTH_USER_MODEL = 'projects.MyUser'
+
+LOGIN_REDIRECT_URL = 'categories'

@@ -14,13 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include, re_path
+from django.contrib.auth import views as auth_views
+from django.urls import path
 
-from projects.views import show_categories, add_category, delete_category, add_project, get_projects, delete_project
+from projects.views import show_categories, add_category, delete_category, add_project, get_projects, delete_project, \
+    signup, home
 
 urlpatterns = [
-    re_path(r'^accounts/', include('allauth.urls')),
+    path('', home, name='home'),
     path('admin/', admin.site.urls),
+    path('accounts/login/', auth_views.login, name='login'),
+    path('logout/', auth_views.logout, {'next_page': '/'}, name='logout'),
+    path('signup/', signup, name='signup'),
     path('categories/', show_categories, name='categories'),
     path('categories/add/', add_category, name='add_category'),
     path('categories/delete/<int:category_id>/', delete_category, name='delete_category'),
@@ -28,5 +33,4 @@ urlpatterns = [
     path('projects/add/<int:category_id>/', add_project, name='add_project'),
     path('projects/add/', add_project, name='add_project'),
     path('projects/delete/<int:project_id>/', delete_project, name='delete_project'),
-
 ]
