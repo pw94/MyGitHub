@@ -4,6 +4,7 @@
 {% include 'include/search_form.html' %}
 <ul>
     {% load mptt_tags %}
+    {% load project_extras %}
     {% recursetree categories %}
         <li>
             <a href={% url 'add_project' node.id %} title="Add project to this category">{{ node.name }}</a>
@@ -20,6 +21,9 @@
             {% for project in node.projects.all %}
                 <br /><a href={{ project.url }}>{{ project.name }}</a>
                 <a href={% url 'delete_project' project.id %} title="Remove project">-</a>
+                {% call_method project 'last_commit' user  as the_commit %}
+                {% call_method project 'last_release' user as the_release %}
+                <p>{{ the_release|not_none }} {{ the_commit.date }} {{ the_commit.message }}</p>
             {% endfor %}
             {% if not node.is_leaf_node %}
                 <ul class="children list-group-item">

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from github import Github
 from mptt.models import MPTTModel, TreeForeignKey
 from taggit.managers import TaggableManager
 
@@ -47,6 +48,25 @@ class Project(models.Model):
         seen = set()
         seen_add = seen.add
         return [x for x in projects if not (x in seen or seen_add(x))]
+
+    def full_name(self):
+        return '/'.join(self.url.split('/')[-2:])
+
+    def last_commit(self, user):
+        g = Github(user.token)
+        repo = g.get_repo(self.full_name())
+        commits = repo.get_commits().get_page(0)
+        if commits:
+            commit = commits[0].commit
+            return {'message': commit.message, 'date': commit.last_modified}
+        else:
+            return {'message': str(), 'date': str()}
+
+    def last_release(self, user):
+        g = Github(user.token)
+        repo = g.get_repo(self.full_name())
+        releases = repo.get_releases().get_page(0)
+        return releases[0].tag_name if releases else None
 
 
 class MyUser(AbstractUser):
