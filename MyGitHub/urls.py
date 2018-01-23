@@ -18,7 +18,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 
 from projects.views import show_categories, add_category, delete_category, add_project, get_projects, delete_project, \
-    signup, home
+    signup, home, import_projects
 
 urlpatterns = [
     path('', home, name='home'),
@@ -33,4 +33,5 @@ urlpatterns = [
     path('projects/add/<int:category_id>/', add_project, name='add_project'),
     path('projects/add/', add_project, name='add_project'),
     path('projects/delete/<int:project_id>/', delete_project, name='delete_project'),
+    path('projects/import/', import_projects, name='import_projects'),
 ]
